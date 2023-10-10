@@ -1,11 +1,30 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import {data} from '../data'
 
-export const Skins = ({ products }) => {
+export const Skins = () => {
+  const [products, setProducts] = useState([])
   const { id } = useParams();
-
-  // Filtra los productos por la categoría seleccionada
-  const filteredProducts = products.filter(product => product.categoryId === id);
+  const getProducts = () =>{
+    return new Promise ((resolve)=>{
+      setTimeout(()=>{
+        resolve(data)
+      }, 2000)
+    })
+  }
+  useEffect(()=>{
+    getProducts()
+    .then((res)=>{
+      if(id){
+         // Filtra los productos por la categoría seleccionada
+        setProducts(res.filter((item)=> item.rarity === id))
+      }else{
+        //No existe el filtro trae toda la data
+        setProducts(res)
+      }
+    })
+    //Se deja al useEffect a la escucha del cambio de categorias
+  },[id])
   return (
     <> 
     <div className='portada'>
@@ -14,7 +33,7 @@ export const Skins = ({ products }) => {
     </div>
     <hr />
     <div className="container-items">
-      {filteredProducts.map(product => (
+      {products.map(product => (
         <div className="item" key={product.id}>
           <img src={product.urlImage} alt={product.nameproduct} />
           <div className="productdetails">
@@ -26,7 +45,7 @@ export const Skins = ({ products }) => {
                 <div className="price">${product.price}</div>
               </strong>
             </p>
-            <div className='buttoncontainer'><button className='addtocart' >Agregar al carrito</button></div>
+            <div className='buttoncontainer'><Link to={'/item/'+product.id} className='addtocart' >Ver detalle </Link></div>
           </div>
         </div>
       ))}

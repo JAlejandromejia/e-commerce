@@ -1,25 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
+import {data} from '../data'
 
-export const Buscarskin = ({ products }) => {
-  // Obtén el parámetro de la URL que corresponde al ID de la skin
-  const { id } = useParams();
 
-  // Encuentra la skin específica por su ID
-  const skin = products.find(product => product.id === Number(id));
+export const Buscarskin = () => {
+  const[skin,setSkin] = useState({})
+  const {id} = useParams();
+  const getOneProduct = (itemId) => {
+    return new Promise ((resolve) => {
+      setTimeout(() => {
+        resolve(data.find((item) => item.id === itemId))
+      }, 2000)
+    })
+  }
+  useEffect(() => {
+    getOneProduct(id)
+    .then((res) => setSkin(res))
+  }, [id])
 
   if (!skin) {
-    return <div>No se encontró la skin</div>;
+    return <div>No se encontro la skin</div>
   }
 
   return (
-    <div>
+    <div className='detallesdeproducto'>
       <h2>Detalles de la Skin</h2>
       <img src={skin.urlImage} alt={skin.nameproduct} />
-      <p>{skin.nameproduct}</p>
-      <p>{skin.hero}</p>
-      <p>{skin.rarity}</p>
-      <p>${skin.price}</p>
+      <p className='detallesdeproductonombre'>{skin.hero} - {skin.nameproduct}</p>
+      <p className='detallesdeproductorareza'>{skin.rarity}</p>
+      <p className='detallesdeproductoprecio'>${skin.price}</p>
+      <button>Agregar al carrito</button>
     </div>
+    
   );
 };

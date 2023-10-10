@@ -11,7 +11,10 @@ export const Navbar = () => {
             <Link to="/">Inicio</Link>
           </li>
           <li>
-            <Link to="/category/skins">Skins</Link>
+            <Link to="/category/Epic">Epic</Link>
+          </li>
+          <li>
+            <Link to="/category/Legendary">Legendary</Link>
           </li>
           <li>
             <Link to="/nosotros">Nosotros</Link>

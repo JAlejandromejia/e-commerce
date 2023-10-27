@@ -45,7 +45,7 @@ export const Skins = () => {
                 <div className="price">${product.price}</div>
               </strong>
             </p>
-            <div className='buttoncontainer'><Link to={'/item/'+product.id} className='addtocart' >Ver detalle </Link></div>
+            <div className='linkDetalle'><Link to={'/item/'+product.id} className='verDetalle' >Ver detalle </Link></div>
           </div>
         </div>
       ))}

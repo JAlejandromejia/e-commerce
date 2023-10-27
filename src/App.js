@@ -6,6 +6,7 @@ import { Nosotros } from './components/nosotros'
 import { Carrito} from './components/carrito'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { Buscarskin } from './components/buscarskin';
+import { DataProvider } from './components/context/dataprovider';
 
 
 
@@ -14,9 +15,12 @@ import { Buscarskin } from './components/buscarskin';
 
 function App() {
   return (
+    
     <Router>
+      <DataProvider>
       <div className="App"> 
         <Navbar />
+        <Carrito />
         <Routes>
           <Route path='/' element={<><Header /><Skins /></>} />
           <Route path='/category/:id' element={<Skins />} />
@@ -25,6 +29,7 @@ function App() {
           <Route path='/carrito' element={<Carrito />} />
         </Routes>
       </div> 
+      </DataProvider>
     </Router>
   );
 }
